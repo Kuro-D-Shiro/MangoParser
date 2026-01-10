@@ -11,15 +11,15 @@ namespace MangoParser.Data.DB.ModelBuilders
             {
                 entity.ToTable("ratings");
 
-                entity.HasKey(x => x.Id).HasName("rating_id_pk");
+                entity.HasKey(x => x.MangaId).HasName("rating_id_pk");
 
-                entity.Property(x => x.Id).HasColumnName("id");
-                entity.Property(x => x.AvarageRating).HasColumnName("avarage_rating");
+                entity.Property(x => x.MangaId).HasColumnName("manga_id");
+                entity.Property(x => x.AverageRating).HasColumnName("average_rating");
                 entity.Property(x => x.VotesCount).HasColumnName("votes_count");
 
                 entity.HasOne(x => x.Manga)
                     .WithOne(x => x.Rating)
-                    .HasForeignKey<Rating>(x => x.Id)
+                    .HasForeignKey<Rating>(x => x.MangaId)
                     .HasConstraintName("rating_manga_id_fk")
                     .OnDelete(DeleteBehavior.Cascade);
             });

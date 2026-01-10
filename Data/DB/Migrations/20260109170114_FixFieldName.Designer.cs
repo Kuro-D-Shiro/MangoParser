@@ -3,6 +3,7 @@ using System;
 using MangoParser.Data.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MangoParser.Migrations
 {
     [DbContext(typeof(MangoParserDbContext))]
-    partial class MangoParserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260109170114_FixFieldName")]
+    partial class FixFieldName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,9 +87,9 @@ namespace MangoParser.Migrations
 
             modelBuilder.Entity("MangoParser.Data.Models.Rating", b =>
                 {
-                    b.Property<int>("MangaId")
+                    b.Property<int>("Id")
                         .HasColumnType("integer")
-                        .HasColumnName("manga_id");
+                        .HasColumnName("id");
 
                     b.Property<decimal>("AverageRating")
                         .HasColumnType("numeric")
@@ -96,7 +99,7 @@ namespace MangoParser.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("votes_count");
 
-                    b.HasKey("MangaId")
+                    b.HasKey("Id")
                         .HasName("rating_id_pk");
 
                     b.ToTable("ratings", (string)null);
@@ -160,7 +163,7 @@ namespace MangoParser.Migrations
                 {
                     b.HasOne("MangoParser.Data.Models.Manga", "Manga")
                         .WithOne("Rating")
-                        .HasForeignKey("MangoParser.Data.Models.Rating", "MangaId")
+                        .HasForeignKey("MangoParser.Data.Models.Rating", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("rating_manga_id_fk");
